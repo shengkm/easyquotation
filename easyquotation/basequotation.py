@@ -1,7 +1,6 @@
 # coding:utf8
 import abc
 import json
-import multiprocessing.pool
 import warnings
 
 import requests
@@ -110,11 +109,9 @@ class BaseQuotation(metaclass=abc.ABCMeta):
 
     def _fetch_stock_data(self, stock_list):
         """获取股票信息"""
-        pool = multiprocessing.pool.ThreadPool(len(stock_list))
-        try:
-            res = pool.map(self.get_stocks_by_range, stock_list)
-        finally:
-            pool.close()
+        res = []
+        for stocks in stock_list:
+            res += self.get_stocks_by_range(stocks)
         return [d for d in res if d is not None]
 
     def format_response_data(self, rep_data, **kwargs):
