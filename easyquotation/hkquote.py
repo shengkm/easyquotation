@@ -29,7 +29,7 @@ class HKQuote(basequotation.BaseQuotation):
         for raw_quotation in re.findall(r'v_r_hk\d+=".*?"', stocks_detail):
             quotation = re.search('"(.*?)"', raw_quotation).group(1).split("~")
             stock_dict[quotation[2]] = dict(
-                lotSize=float(quotation[0]),
+                lotSize=float(quotation[60]),
                 name=quotation[1],
                 price=float(quotation[3]),
                 lastPrice=float(quotation[4]),
